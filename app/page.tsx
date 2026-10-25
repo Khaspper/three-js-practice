@@ -32,13 +32,31 @@ function Cube({
   );
 }
 
+function Sphere({
+  position = [0, 0, 0],
+  size = [1, 30, 30],
+  color = "black",
+}: {
+  position?: TPosition;
+  size?: TSize;
+  color?: string;
+}) {
+  return (
+    <mesh position={position}>
+      <sphereGeometry args={size} />
+      <meshStandardMaterial color={color} />
+    </mesh>
+  );
+}
+
 export default function Home() {
   return (
     <Canvas>
-      <directionalLight position={[0, 0, 2]} intensity={0.5} />
+      <directionalLight position={[0, 0, 10]} intensity={0.5} />
       <ambientLight intensity={0.1} />
 
-      <Cube position={[0, 0, 0]} color="orange" />
+      <Cube position={[2, 2, 2]} color="orange" />
+      <Sphere position={[0, 0, 0]} color="orange" />
 
       {/* <group position={[0, -1, 0]}>
         <Cube position={[1, 0, 0]} color="green" />
