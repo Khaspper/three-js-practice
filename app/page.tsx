@@ -6,6 +6,7 @@ import { Mesh } from "three";
 
 type TPosition = [number, number, number];
 type TSize = [number, number, number];
+type TTorusSize = [number, number, number, number];
 
 function Cube({
   position = [0, 0, 0],
@@ -49,6 +50,23 @@ function Sphere({
   );
 }
 
+function Torus({
+  position = [0, 0, 0],
+  size = [0.5, 0.1, 30, 30],
+  color = "black",
+}: {
+  position?: TPosition;
+  size?: TTorusSize;
+  color?: string;
+}) {
+  return (
+    <mesh position={position}>
+      <torusGeometry args={size} />
+      <meshStandardMaterial color={color} />
+    </mesh>
+  );
+}
+
 export default function Home() {
   return (
     <Canvas>
@@ -56,7 +74,8 @@ export default function Home() {
       <ambientLight intensity={0.1} />
 
       <Cube position={[2, 2, 2]} color="orange" />
-      <Sphere position={[0, 0, 0]} color="orange" />
+      <Sphere position={[3, 3, 3]} color="orange" />
+      <Torus position={[0, 0, 0]} color="orange" />
 
       {/* <group position={[0, -1, 0]}>
         <Cube position={[1, 0, 0]} color="green" />
