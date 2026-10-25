@@ -67,15 +67,33 @@ function Torus({
   );
 }
 
+function TorusKnot({
+  position = [0, 0, 0],
+  size = [0.5, 0.1, 1000, 50],
+  color = "black",
+}: {
+  position?: TPosition;
+  size?: TTorusSize;
+  color?: string;
+}) {
+  return (
+    <mesh position={position}>
+      <torusKnotGeometry args={size} />
+      <meshStandardMaterial color={color} />
+    </mesh>
+  );
+}
+
 export default function Home() {
   return (
     <Canvas>
       <directionalLight position={[0, 0, 10]} intensity={0.5} />
       <ambientLight intensity={0.1} />
 
-      <Cube position={[2, 2, 2]} color="orange" />
-      <Sphere position={[3, 3, 3]} color="orange" />
-      <Torus position={[0, 0, 0]} color="orange" />
+      <Cube position={[2, 0, 0]} color="orange" />
+      <Sphere position={[0, -2, 0]} color="orange" />
+      <Torus position={[2, -2, 0]} color="orange" />
+      <TorusKnot position={[0, 0, 0]} color="orange" />
 
       {/* <group position={[0, -1, 0]}>
         <Cube position={[1, 0, 0]} color="green" />
