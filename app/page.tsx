@@ -42,10 +42,19 @@ function Sphere({
   size?: TSize;
   color?: string;
 }) {
+  const ref = useRef<Mesh>(null!);
+
+  useFrame((state, delta) => {
+    ref.current.rotation.x += delta;
+    ref.current.rotation.y += delta * 2;
+
+    ref.current.position.z = Math.cos(state.clock.elapsedTime) * 2;
+  });
+
   return (
-    <mesh position={position}>
+    <mesh position={position} ref={ref}>
       <sphereGeometry args={size} />
-      <meshStandardMaterial color={color} />
+      <meshStandardMaterial color={color} wireframe />
     </mesh>
   );
 }
@@ -90,10 +99,10 @@ export default function Home() {
       <directionalLight position={[0, 0, 10]} intensity={0.5} />
       <ambientLight intensity={0.1} />
 
-      <Cube position={[2, 0, 0]} color="orange" />
+      {/* <Cube position={[2, 0, 0]} color="orange" /> */}
       <Sphere position={[0, -2, 0]} color="orange" />
-      <Torus position={[2, -2, 0]} color="orange" />
-      <TorusKnot position={[0, 0, 0]} color="orange" />
+      {/* <Torus position={[2, -2, 0]} color="orange" />
+      <TorusKnot position={[0, 0, 0]} color="orange" /> */}
 
       {/* <group position={[0, -1, 0]}>
         <Cube position={[1, 0, 0]} color="green" />
