@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Mesh } from "three";
 
 type TPosition = [number, number, number];
@@ -44,17 +44,22 @@ function Sphere({
 }) {
   const ref = useRef<Mesh>(null!);
 
-  useFrame((state, delta) => {
-    ref.current.rotation.x += delta;
-    ref.current.rotation.y += delta * 2;
+  const [isHovered, setIsHovered] = useState(false);
 
-    ref.current.position.z = Math.cos(state.clock.elapsedTime) * 2;
+  useFrame((state, delta) => {
+    const speed = isHovered ? 1 : 0.2;
+    ref.current.rotation.y += delta * speed;
   });
 
   return (
-    <mesh position={position} ref={ref}>
+    <mesh
+      position={position}
+      ref={ref}
+      onPointerEnter={(e) => (e.stopPropagation(), setIsHovered(true))}
+      onPointerLeave={() => setIsHovered(false)}
+    >
       <sphereGeometry args={size} />
-      <meshStandardMaterial color={color} wireframe />
+      <meshStandardMaterial color={isHovered ? color : "lightBlue"} wireframe />
     </mesh>
   );
 }
@@ -100,7 +105,7 @@ export default function Home() {
       <ambientLight intensity={0.1} />
 
       {/* <Cube position={[2, 0, 0]} color="orange" /> */}
-      <Sphere position={[0, -2, 0]} color="orange" />
+      <Sphere color="orange" />
       {/* <Torus position={[2, -2, 0]} color="orange" />
       <TorusKnot position={[0, 0, 0]} color="orange" /> */}
 
