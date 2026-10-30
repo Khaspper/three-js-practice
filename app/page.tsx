@@ -105,9 +105,13 @@ export default function Home() {
       <ambientLight intensity={0.1} />
 
       {/* <Cube position={[2, 0, 0]} color="orange" /> */}
-      <Sphere color="orange" />
-      {/* <Torus position={[2, -2, 0]} color="orange" />
-      <TorusKnot position={[0, 0, 0]} color="orange" /> */}
+      {/* <Sphere color="orange" /> */}
+      {/* <Torus position={[2, -2, 0]} color="orange" />*/}
+      <TorusKnot
+        position={[0, 0, 0]}
+        size={[1, 0.1, 1000, 50]}
+        color="orange"
+      />
 
       {/* <group position={[0, -1, 0]}>
         <Cube position={[1, 0, 0]} color="green" />
