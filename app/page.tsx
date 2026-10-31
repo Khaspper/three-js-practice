@@ -1,8 +1,13 @@
 "use client";
 
+import {
+  MeshWobbleMaterial,
+  OrbitControls,
+  useHelper,
+} from "@react-three/drei";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useRef, useState } from "react";
-import { Mesh } from "three";
+import { DirectionalLight, DirectionalLightHelper, Mesh } from "three";
 
 type TPosition = [number, number, number];
 type TSize = [number, number, number];
@@ -94,31 +99,43 @@ function TorusKnot({
     <mesh position={position}>
       <torusKnotGeometry args={size} />
       <meshStandardMaterial color={color} />
+      <MeshWobbleMaterial />
     </mesh>
   );
 }
 
-export default function Home() {
-  return (
-    <Canvas>
-      <directionalLight position={[0, 0, 10]} intensity={0.5} />
-      <ambientLight intensity={0.1} />
+function Scene() {
+  const directionalLightRef = useRef<DirectionalLight>(null!);
 
+  useHelper(directionalLightRef, DirectionalLightHelper, 0.5, "white");
+
+  return (
+    <>
+      <directionalLight
+        position={[0, 1, 3]}
+        intensity={0.5}
+        ref={directionalLightRef}
+      />
+      <ambientLight intensity={0.1} />
       {/* <Cube position={[2, 0, 0]} color="orange" /> */}
       {/* <Sphere color="orange" /> */}
       {/* <Torus position={[2, -2, 0]} color="orange" />*/}
-      <TorusKnot
-        position={[0, 0, 0]}
-        size={[1, 0.1, 1000, 50]}
-        color="orange"
-      />
-
+      <TorusKnot position={[0, 0, 0]} size={[1, 0.1, 100, 50]} color="orange" />
+      <OrbitControls />
       {/* <group position={[0, -1, 0]}>
         <Cube position={[1, 0, 0]} color="green" />
         <Cube position={[-1, 0, 0]} color="hotpink" />
         <Cube position={[-1, 2, 0]} color="blue" />
         <Cube position={[1, 2, 0]} color="yellow" />
       </group> */}
+    </>
+  );
+}
+
+export default function Home() {
+  return (
+    <Canvas>
+      <Scene />
     </Canvas>
   );
 }
